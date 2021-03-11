@@ -12,7 +12,7 @@ class villager(db.Model):
 	name = db.Column(db.String(20), unique=True, nullable=False)
 	species = db.Column(db.String(20), nullable=False)
 	personality = db.Column(db.String(20), nullable=False)
-	quote = db.Column(db.Text)
+	quote = db.Column(db.String(150))
 
 	def __repr__(self):
 		return '<Villager %r>' % self.name
@@ -23,13 +23,14 @@ parser = reqparse.RequestParser()
 parser.add_argument('name', type=str, required=True)
 parser.add_argument('species', type=str, required=True)
 parser.add_argument('personality', type=str, required=True)
-parser.add_argument('quote', type=str, required=True)
+parser.add_argument('quote', type=str)
 
 mfields = {
 	'id' : fields.Integer,
 	'name' : fields.String,
-	'personality' : fields.String
-	'quote' : fields.Text
+	'species' : fields.String,
+	'personality' : fields.String,
+	'quote' : fields.String
 }
 
 
@@ -41,10 +42,16 @@ class villagerList(Resource):
 			abort(404, message="Villager doesn't exist")
 		return result
 
+	@marshal_with(mfields)
 	def put(self, name):
-		return ''
+		args = parser.parse_args()
+		vlg = villager(name=args['name'], species=args['species'], personality=args['personality'], quote=args['quote'])
 
-api.add_resource(villagerList, '/<string:name>')
+		db.session.add(vlg)
+		db.session.commit()
+		return vlg, 201
+
+api.add_resource(villagerList, '/villager/<string:name>')
 
 if __name__ == '__main__':
 	app.run(debug=True)
