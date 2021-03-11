@@ -25,6 +25,12 @@ parser.add_argument('species', type=str, required=True)
 parser.add_argument('personality', type=str, required=True)
 parser.add_argument('quote', type=str)
 
+parser_update = reqparse.RequestParser()
+parser_update.add_argument('name', type=str)
+parser_update.add_argument('species', type=str)
+parser_update.add_argument('personality', type=str)
+parser_update.add_argument('quote', type=str)
+
 mfields = {
 	'id' : fields.Integer,
 	'name' : fields.String,
@@ -50,6 +56,27 @@ class villagerList(Resource):
 		db.session.add(vlg)
 		db.session.commit()
 		return vlg, 201
+
+	@marshal_with(mfields)
+	def patch(self, name):
+		vlg = villager.query.filter_by(name=name).first()
+		if not vlg:
+			abort(404, message="Villager doesn't exist")
+
+		args = parser_update.parse_args()
+
+		if args['name']:
+			vlg.name = args['name']
+		if args['species']:
+			vlg.species = args['species']
+		if args['personality']:
+			vlg.personality = args['personality']
+		if args['quote']:
+			vlg.quote = args['quote']
+
+		db.session.commit()
+		return vlg
+
 
 api.add_resource(villagerList, '/villager/<string:name>')
 
