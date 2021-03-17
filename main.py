@@ -39,7 +39,6 @@ mfields = {
 	'quote' : fields.String
 }
 
-
 class villagerList(Resource):
 	@marshal_with(mfields)
 	def get(self, name):
@@ -76,6 +75,16 @@ class villagerList(Resource):
 
 		db.session.commit()
 		return vlg
+
+	def delete(self, name):
+		result = villager.query.filter_by(name=name).first()
+		if not result:
+			abort(404, message="Villager doesn't exist")
+		db.session.delete(result)
+		db.session.commit()
+		print('Deleting...')
+		return '', 204
+
 
 
 api.add_resource(villagerList, '/villager/<string:name>')
