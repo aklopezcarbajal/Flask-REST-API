@@ -7,7 +7,7 @@ data = [
 	{'name': 'Rocket', 'species': 'Gorilla', 'personality': 'Sisterly', 'quote': "Art feeds the soul. So does pizza."},
 	{'name': 'Bud', 'species': 'Lion', 'personality': 'Jock', 'quote': "You're not living unless you're sweating!"},
 	{'name': 'Jitters', 'species': 'Bird', 'personality': 'Jock', 'quote': "When you're a team of one, you're always captain!"},
-	{'name': 'Lucha', 'species': 'Bird', 'personality': 'Smug', 'quote': "Birds of a feather, et cetera, et cetera..."},
+	{'name': 'Kidd', 'species': 'Goat', 'personality': 'Smug', 'quote': "Be yourself, everyone else is already taken."},
 	{'name': 'Raymond', 'species': 'Cat', 'personality': 'Smug', 'quote': "Stay on brand!"},
 	{'name': 'Molly', 'species': 'Duck', 'personality': 'Normal', 'quote': "Like water off a duck's back."},
 	{'name': 'Lily', 'species': 'Frog', 'personality': 'Normal', 'quote': "Don't jump to conclusions!"},
