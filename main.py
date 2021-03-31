@@ -7,6 +7,10 @@ api = Api(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tmp/database.db'
 db  = SQLAlchemy(app)
 
+@app.route('/')
+def home():
+	return "<h1>Python REST API with Flask</h1> <p>This API is connected to a local database of Animal Crossing characters.</p>"
+
 class villager(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	name = db.Column(db.String(20), unique=True, nullable=False)
@@ -84,8 +88,6 @@ class villagerList(Resource):
 		db.session.commit()
 		print('Deleting...')
 		return '', 204
-
-
 
 api.add_resource(villagerList, '/villager/<string:name>')
 
