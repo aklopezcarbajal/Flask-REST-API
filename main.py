@@ -92,4 +92,4 @@ class villagerList(Resource):
 api.add_resource(villagerList, '/villager/<string:name>')
 
 if __name__ == '__main__':
-	app.run(debug=True)
+	app.run()
